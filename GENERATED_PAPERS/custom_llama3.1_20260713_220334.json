@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "timestamp": "20260713_220334",
+    "model_name": "llama3.1",
+    "class_num": null,
+    "subject": null,
+    "source_filename": null,
+    "generation_date": "2026-07-13T22:03:34.776010"
+  },
+  "questions": {
+    "mcqs": [
+      {
+        "question": "What is the primary function of the Text Chunking process in the Question Generation part?\nA) To extract relevant information from the PDF\nB) To slice the extracted text into overlapping segments\nC) To remove unnecessary line breaks and formatting issues\nD) To select the appropriate AI model for question generation",
+        "answer": null
+      },
+      {
+        "question": "Which metrics are used to evaluate the similarity between AI-generated questions and real textbook questions?\nA) BLEU, BERT, ROUGE, METEOR\nB) Keyword matching and semantic evaluation only\nC) Only BLEU metric is used\nD) A combination of keyword matching and natural language processing techniques",
+        "answer": null
+      },
+      {
+        "question": "What is the purpose of the Data Cleaning process in the Question Generation part?\nA) To extract relevant information from the PDF\nB) To slice the extracted text into overlapping segments\nC) To remove unnecessary line breaks, formatting issues, and page artifacts\nD) To select the appropriate AI model for question generation",
+        "answer": null
+      },
+      {
+        "question": "What is the result of the Text Chunking process in the Question Generation part?\nA) The extracted text is sliced into non-overlapping segments\nB) The extracted text is processed as a single entity\nC) The extracted text is sliced into overlapping segments with a 100-character overlap\nD) The extracted text is removed and replaced with dummy data",
+        "answer": null
+      },
+      {
+        "question": "What happens when the PDF contains scanned images?\nA) The system uses OCR to read the scanned text uploaded\nB) The system extracts only the text written inside the PDF pages\nC) The system ignores the scanned text and uses only the written text\nD) The system generates random questions based on the scanned text",
+        "answer": null
+      }
+    ],
+    "fill_in_the_blanks": [
+      {
+        "question": "The _______________________ technique is used to fine-tune the LLMs.\n(Answer not provided)",
+        "answer": null
+      },
+      {
+        "question": "After extracting the text from the PDF, it is sliced into overlapping segments with a _______________ character overlap.\n(Answer not provided)",
+        "answer": null
+      },
+      {
+        "question": "To check how well a LLM responds with the data, the finetuned adapter needs to be merged with the _______________________ model.\n(Answer not provided)",
+        "answer": null
+      },
+      {
+        "question": "The system uses four types of metrics (BLEU, BERT, ROUGE, METEOR) for _______________________ evaluation of generated questions.\n(Answer not provided)",
+        "answer": null
+      },
+      {
+        "question": "A _______________________ file is created for each class's textbook to store textbook questions in a JSON format.\n(Answer not provided)",
+        "answer": null
+      }
+    ],
+    "subjective": [
+      {
+        "question": "Describe the process of text chunking and its significance in generating high-quality questions.",
+        "answer": null
+      },
+      {
+        "question": "Explain the importance of data cleaning in the question generation part, including examples of formatting issues that may occur.",
+        "answer": null
+      },
+      {
+        "question": "What are the four types of metrics used to evaluate the similarity between AI-generated questions and real textbook questions? Explain their functions in detail.",
+        "answer": null
+      },
+      {
+        "question": "Describe the steps involved in fine-tuning LLMs using the QLORA technique, including the role of chapters and questions in the process.",
+        "answer": null
+      },
+      {
+        "question": "What is a modelfile, and how does it act as an instruction manual for importing AI models into registries?",
+        "answer": null
+      }
+    ]
+  },
+  "context": "DOCUMENTATION \nThe System is designed to work in three parts -:  \n 1. Question Generation  \n 2. Question Evaluation \n 3. Answer Generation \n֎ For the 1st part the process goes as-: \ni) Direct Text Extraction -:  The script uses the fitz library (PyMuPDF) to read the documents. It moves \nthrough every page inside the PDF and extracts the texts written inside it using .get_text(). And if \njust in case the pdf is a scanned image then OCR is embedded in the system which allows to read the \nscanned text which is uploaded. \nii) Text Chunking -:    As the whole chapters are too large for the LLM's context window, the \nextracted text is sliced into overlapping segments. It creates chunks of 1200 characters, with a 100-\ncharacter overlap between consecutive chunks. This overlap helps ensure that sentences or \nconcepts aren't abruptly cut off at the boundaries. Now if the pdf is above 1200 characters then  \ninstead, it processes the entire 10,000-character document by cutting it up into multiple smaller \npieces, one after another, until it reaches the end.  \niii) Data Cleaning -:  After the text is extracted, the content may still contain irregular formatting, \nunnecessary line breaks, spacing problems, or page artifacts from the original PDF structure. The \nbecomes clean. \niv) Selection of AI Model  -:  The choice of LLM can be chosen to generate the question paper \naccordingly. \nv) Sending Context to the AI Model -: The processed educational text is converted into prompts. \nThese prompts instruct the AI model about what type of question should be generated. \nFor example, the system may ask the model to generate: \n+ MCQs \n+ Fill in the blanks \n+ Subjective questions \nvi) AI Understanding and Question Generation -: Inside the Transformer model the prompts \nalongwith the text which is sent from the pdf is worked out to generate the question paper of the \ntype. \nvii) Cleaning Generated Questions -:  The generated questions often contains noise which needs to \nbe removed. These cleaning are done to remove the unwanted symbols from the text. \nThis is the whole process through which a Question Paper is generated accordingly.  \n֎ Now for the 2nd part of the model where the evaluation of each question is \ndone as-: \ni) Semantic Evaluation of Generated Questions -: A textbook question reference needs to uploaded \nhere to match the following questions which are generated.  \nii) Matching of the questions -: The system checks whether the AI-generated questions are \neducationally similar to real textbook questions. Instead of simple keyword matching, the system \nchecks the matching using four types of metric - BLEU, BERT, ROUGE, METEOR. \nii) Metrics-: Individual metric option for each of those are present to match and check from the \nquestion paper and the generated questions as how much it matches.  \n֎ As this is the whole raw system made. Now each LLM is finetuned \naccordingly to see how each of the LLM reacts to the question generation. The \nsteps explained are -: \ni) A whole class's textbook is taken and is divided into chapters separately.  \nii) Matching the textbook's class a file is created for questions' where textbook questions (taken \nfrom XAM IDEA & ARIHANT) are taken in the form of MCQ and Long Answer Question and kept \ninside QUESTION folder in a json format. \niii) Now each LLM is being fine tuned in different ranks ranging from (2, 4, 8, 16, 32, 64) using the \nQLORA technique and each time the chapters and questions' are used to fine tune the LLM's. \niv) Now after the finetuned adapters are trained and saved the adapter is need to be merged with \nthe Base Model to check how well a LLM responds with the data. \nv) The llama.cpp repository is installed and it is used to convert the adapter model into GGUF Format \nas in this model Ollama is used to make question paper and Ollama's entire engine is built around \nllama.cpp, it simply cannot read PyTorch .safetensors files. It only understands GGUF. So the GGUF \nFormat is required for it. \nvi) And at last a Modelfile is created due to Ollama doesn't automatically know it exists or what to do \nwith it. So we can think of a Modelfile exactly like a Dockerfile for AI models. The Modelfile acts as \nthe instruction manual for importing the file into that registry. "
+}

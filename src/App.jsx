@@ -19,7 +19,14 @@ const subjectOptions = {
 };
 
 const generatorModels = [
-  "gpt2", "t5", "mistral", "gpt-4", "mistral_rank4", "gemma2:9b", "phi3-rank4", "llama3.1"
+  "gpt2",
+  "t5",
+  "mistral",
+  "gpt-4",
+  "gemma2:9b",
+  "phi3-rank4",
+  "llama3.1",
+  "qwen2.5:7b"
 ];
 const metricOptions = [
   { value: "bert", label: "BERT (Semantic Similarity)" },
